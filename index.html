@@ -600,5 +600,113 @@
     }
   });
 </script>
+  <script>
+  // ============================================================
+  // CONFIGURATION — remplace par tes vraies valeurs
+  // ============================================================
+  const EMAILJS_PUBLIC_KEY  = 'tx7Dbtr6JypewJUj9';   // Account > API Keys
+  const EMAILJS_SERVICE_ID  = 'service_8obnlgg';            // Email Services > ton service
+  const EMAILJS_TEMPLATE_ID = 'template_kiv6ije';           // Email Templates > ton template
+  const MAKE_WEBHOOK_URL    = 'https://hook.eu1.make.com/sf75ckcbybqwvu7whvo7dmfku3xv1wee'; // Webhook Make
+  const SHEETS_URL          = 'https://docs.google.com/spreadsheets/d/1ReVpn05s9tEUAu1mky7Md1QP7i4z-k86S6uDflkZVKE/edit'; // lien Sheets
+  // ============================================================
+
+  emailjs.init(EMAILJS_PUBLIC_KEY);
+
+  // Nav shadow au scroll
+  window.addEventListener('scroll', () => {
+    document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // Bouton Voiceflow placeholder
+  document.getElementById('vf-btn').addEventListener('click', () => {
+    if (window.voiceflow?.chat) {
+      window.voiceflow.chat.open();
+    } else {
+      alert('Voiceflow non configuré — colle ton snippet dans le HTML pour activer le bot !');
+    }
+  });
+
+  // Compteur caractères textarea
+  const msgField = document.getElementById('cf-message');
+  const charN    = document.getElementById('char-n');
+  if (msgField) {
+    msgField.addEventListener('input', () => {
+      charN.textContent = msgField.value.length;
+    });
+  }
+
+  // Formulaire de contact
+  const form      = document.getElementById('contact-form');
+  const btn       = document.getElementById('form-btn');
+  const msgOk     = document.getElementById('msg-success');
+  const msgErr    = document.getElementById('msg-error');
+
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Validation basique
+      const nom     = document.getElementById('cf-nom').value.trim();
+      const email   = document.getElementById('cf-email').value.trim();
+      const sujet   = document.getElementById('cf-sujet').value;
+      const message = document.getElementById('cf-message').value.trim();
+
+      if (!nom || !email || !sujet || !message) {
+        msgErr.querySelector('div').innerHTML = '<strong>Champs manquants.</strong><br>Merci de remplir tous les champs obligatoires.';
+        msgErr.style.display = 'flex';
+        msgOk.style.display  = 'none';
+        return;
+      }
+
+      // État chargement
+      btn.disabled = true;
+      btn.innerHTML = '<div class="spinner"></div> Envoi en cours…';
+      msgOk.style.display  = 'none';
+      msgErr.style.display = 'none';
+
+      const date = new Date().toLocaleString('fr-FR', { dateStyle: 'short', timeStyle: 'short' });
+
+      // 1 — EmailJS (email vers la boîte OT)
+      const emailParams = {
+        nom, email_visiteur: email, sujet, message, date,
+        lien_sheets: SHEETS_URL
+      };
+
+      // 2 — Make webhook (en parallèle)
+      const makePayload = { nom, email, sujet, message, date };
+
+      try {
+        await Promise.all([
+          emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, emailParams),
+          fetch(MAKE_WEBHOOK_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(makePayload)
+          })
+        ]);
+
+        // Succès
+        form.reset();
+        charN.textContent = '0';
+        msgOk.style.display  = 'flex';
+        msgErr.style.display = 'none';
+        btn.disabled = false;
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="20 6 9 17 4 12"/></svg> Message envoyé !';
+        setTimeout(() => {
+          btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Envoyer ma demande';
+        }, 3000);
+
+      } catch (err) {
+        console.error('Erreur envoi :', err);
+        msgErr.querySelector('div').innerHTML = '<strong>Erreur d\'envoi.</strong><br>Veuillez réessayer ou nous appeler au 05 59 13 94 99.';
+        msgErr.style.display = 'flex';
+        msgOk.style.display  = 'none';
+        btn.disabled = false;
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Envoyer ma demande';
+      }
+    });
+  }
+</script>
 </body>
 </html>
