@@ -260,25 +260,7 @@
     padding: 6px 14px; border-radius: 20px; font-size: 12px; color: var(--vert-clair);
   }
 
-  /* VOICEFLOW WIDGET PLACEHOLDER */
-  .vf-placeholder {
-    position: fixed; bottom: 24px; right: 24px; z-index: 200;
-    width: 56px; height: 56px; border-radius: 50%;
-    background: var(--vert);
-    box-shadow: 0 4px 20px rgba(45,106,79,0.4);
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer; transition: transform .2s, box-shadow .2s;
-    animation: popIn .5s cubic-bezier(.34,1.56,.64,1) 1s both;
-  }
-  @keyframes popIn { from{transform:scale(0);opacity:0} to{transform:scale(1);opacity:1} }
-  .vf-placeholder:hover { transform: scale(1.08); box-shadow: 0 6px 28px rgba(45,106,79,0.5); }
-  .vf-placeholder svg { width: 26px; height: 26px; fill: white; }
-  .vf-placeholder .notif {
-    position: absolute; top: -2px; right: -2px; width: 16px; height: 16px;
-    background: #ff6b6b; border-radius: 50%; border: 2px solid white;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 9px; color: white; font-weight: 700;
-  }
+
 
   /* CONTACT */
   .contact { background: var(--pierre-pale); padding: 80px 60px; }
@@ -725,11 +707,7 @@
   </div>
 </footer>
 
-<!-- BOUTON CHATBOT (remplacé par le widget Voiceflow) -->
-<div class="vf-placeholder" id="vf-btn" title="Ouvrir Nay'Bot">
-  <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-  <div class="notif">1</div>
-</div>
+
 
 <!-- VOICEFLOW WIDGET -->
 <script type="text/javascript">
@@ -743,6 +721,8 @@
         voice: {
           url: "https://runtime-api.voiceflow.com"
         }
+      }).then(() => {
+        window.voiceflow.chat.open();
       });
     }
     v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs";
@@ -767,15 +747,6 @@
   // Nav shadow au scroll
   window.addEventListener('scroll', () => {
     document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 20);
-  });
-
-  // Bouton Voiceflow placeholder
-  document.getElementById('vf-btn').addEventListener('click', () => {
-    if (window.voiceflow?.chat) {
-      window.voiceflow.chat.open();
-    } else {
-      alert('Voiceflow non configuré — colle ton snippet dans le HTML pour activer le bot !');
-    }
   });
 
   // Compteur caractères textarea
