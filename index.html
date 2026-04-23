@@ -7,8 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<script>emailjs.init("tx7Dbtr6JypewJUj9");</script>
-  <style>
+<style>
   :root {
     --vert: #2d6a4f;
     --vert-clair: #52b788;
@@ -280,7 +279,7 @@
     display: flex; align-items: center; justify-content: center;
     font-size: 9px; color: white; font-weight: 700;
   }
-    
+
   /* CONTACT */
   .contact { background: white; }
   .contact-wrap { display: grid; grid-template-columns: 1fr 1.6fr; gap: 60px; align-items: start; }
@@ -355,6 +354,9 @@
     .stats-bar { padding: 0 20px; flex-wrap: wrap; }
     .chatbot-section { grid-template-columns: 1fr; gap: 40px; }
     .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+    .contact-wrap { grid-template-columns: 1fr; gap: 36px; }
+    .contact-info { position: static; }
+    .form-row { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -375,6 +377,7 @@
     <li><a href="#activites">Activités</a></li>
     <li><a href="#evenements">Événements</a></li>
     <li><a href="#infos">Infos pratiques</a></li>
+    <li><a href="#contact">Nous contacter</a></li>
     <li><a href="#chatbot" class="nav-cta"><div class="bot-dot"></div>Assistant IA</a></li>
   </ul>
 </nav>
@@ -591,6 +594,101 @@
   </div>
 </section>
 
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="section-label">Écrivez-nous</div>
+  <div class="contact-wrap">
+
+    <div class="contact-info">
+      <h2>Nous contacter</h2>
+      <p class="section-intro">Notre équipe vous répond dans les meilleurs délais. Votre message est analysé et une réponse personnalisée est préparée avant même que nous vous lisions.</p>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div class="contact-detail-text">
+          <strong>Horaires d'accueil</strong>
+          <span>Lun–Ven : 9h30–12h30 / 14h–18h<br>Samedi : 9h30–17h</span>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.84a16 16 0 0 0 6 6l1-1.94a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.7 15z"/></svg>
+        </div>
+        <div class="contact-detail-text">
+          <strong>Téléphone</strong>
+          <span>05 59 13 94 99</span>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/></svg>
+        </div>
+        <div class="contact-detail-text">
+          <strong>Adresse</strong>
+          <span>Place du 8-Mai-1945<br>64800 Nay — Parking gratuit</span>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">
+          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        </div>
+        <div class="contact-detail-text">
+          <strong>Réponse rapide 24h/24</strong>
+          <span>Utilisez Nay'Bot en bas à droite pour une réponse immédiate</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <form id="contact-form" novalidate>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="cf-nom">Votre nom <span>*</span></label>
+            <input type="text" id="cf-nom" name="nom" placeholder="Marie Dupont" required autocomplete="name">
+          </div>
+          <div class="form-group">
+            <label for="cf-email">Votre email <span>*</span></label>
+            <input type="email" id="cf-email" name="email" placeholder="marie@exemple.fr" required autocomplete="email">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="cf-sujet">Sujet de votre demande <span>*</span></label>
+          <select id="cf-sujet" name="sujet" required>
+            <option value="" disabled selected>Choisissez une catégorie…</option>
+            <option value="Demande d'information — Hébergement">Hébergement</option>
+            <option value="Demande d'information — Activités">Activités & loisirs</option>
+            <option value="Demande d'information — Randonnée">Randonnée & nature</option>
+            <option value="Demande d'information — Gastronomie">Gastronomie & marchés</option>
+            <option value="Demande groupe / scolaire">Groupe ou scolaire</option>
+            <option value="Demande presse / partenariat">Presse & partenariat</option>
+            <option value="Réclamation ou suggestion">Réclamation ou suggestion</option>
+            <option value="Autre demande">Autre</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="cf-message">Votre message <span>*</span></label>
+          <textarea id="cf-message" name="message" placeholder="Décrivez votre demande en détail…" required maxlength="1000"></textarea>
+          <div class="char-count"><span id="char-n">0</span> / 1000 caractères</div>
+        </div>
+        <button type="submit" class="form-submit" id="form-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          Envoyer ma demande
+        </button>
+        <div class="form-msg success" id="msg-success">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          <div><strong>Message envoyé !</strong><br>Votre demande a bien été reçue. Notre équipe vous répond sous 24–48h. Consultez vos spams si vous ne recevez pas de réponse.</div>
+        </div>
+        <div class="form-msg error" id="msg-error">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <div><strong>Erreur d'envoi.</strong><br>Veuillez réessayer ou nous appeler au 05 59 13 94 99.</div>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</section>
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-grid">
@@ -632,41 +730,30 @@
   <div class="notif">1</div>
 </div>
 
-<!-- VOICEFLOW WIDGET -->
-  <script type="text/javascript">
+<!-- ============================================================
+  VOICEFLOW WIDGET — COLLE TON SNIPPET ICI
+  Remplace ce bloc commentaire par le code fourni par Voiceflow
+  (Menu Publish > Integrations > Web Chat > Copy Snippet)
+  ============================================================ -->
+<!--
+<script type="text/javascript">
   (function(d, t) {
-      var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
-      v.onload = function() {
-        window.voiceflow.chat.load({
-          verify: { projectID: '69e692841164584f2965ac38' },
-          url: 'https://general-runtime.voiceflow.com',
-          versionID: 'production',
-          voice: {
-            url: "https://runtime-api.voiceflow.com"
-          }
-        });
-      }
-      v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs"; v.type = "text/javascript"; s.parentNode.insertBefore(v, s);
+    var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
+    v.onload = function() {
+      window.voiceflow.chat.load({
+        verify: { projectID: '69e692841164584f2965ac38' },
+        url: 'https://general-runtime.voiceflow.com',
+        versionID: 'production'
+      });
+    }
+    v.src = "https://cdn.voiceflow.com/widget/bundle.mjs";
+    v.type = "text/javascript";
+    s.parentNode.insertBefore(v, s);
   })(document, 'script');
 </script>
 -->
 
 <script>
-  // Scroll nav shadow
-  window.addEventListener('scroll', () => {
-    document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 20);
-  });
-
-  // Bouton placeholder (supprimé quand Voiceflow est actif)
-  document.getElementById('vf-btn').addEventListener('click', () => {
-    if (window.voiceflow?.chat) {
-      window.voiceflow.chat.open();
-    } else {
-      alert('Voiceflow non configuré — colle ton snippet dans le HTML pour activer le bot !');
-    }
-  });
-</script>
-  <script>
   // ============================================================
   // CONFIGURATION — remplace par tes vraies valeurs
   // ============================================================
