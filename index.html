@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Office de Tourisme du Pays de Nay — Béarn Pyrénées</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --vert: #2d6a4f;
+    --vert-clair: #52b788;
+    --vert-pale: #d8f3dc;
+    --pierre: #8b7355;
+    --pierre-pale: #f5f0e8;
+    --or: #c9a84c;
+    --texte: #1a1a2e;
+    --texte-sec: #5a5a6a;
+    --blanc: #ffffff;
+    --nav-h: 72px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Source Sans 3', sans-serif; color: var(--texte); background: var(--blanc); overflow-x: hidden; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    height: var(--nav-h);
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(45,106,79,0.12);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px;
+    transition: box-shadow .3s;
+  }
+  nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.08); }
+  .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .nav-logo-icon {
+    width: 40px; height: 40px; background: var(--vert); border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .nav-logo-icon svg { width: 22px; height: 22px; fill: white; }
+  .nav-logo-text { line-height: 1.2; }
+  .nav-logo-text .top { font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 700; color: var(--vert); }
+  .nav-logo-text .sub { font-size: 11px; color: var(--texte-sec); letter-spacing: .04em; text-transform: uppercase; }
+  .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
+  .nav-links a { font-size: 14px; color: var(--texte-sec); text-decoration: none; font-weight: 500; transition: color .2s; }
+  .nav-links a:hover { color: var(--vert); }
+  .nav-cta {
+    background: var(--vert); color: white !important; padding: 8px 18px;
+    border-radius: 6px; font-size: 13px !important; font-weight: 600 !important;
+    display: flex; align-items: center; gap: 6px;
+    transition: background .2s !important;
+  }
+  .nav-cta:hover { background: #1f4e39 !important; color: white !important; }
+  .bot-dot { width: 7px; height: 7px; border-radius: 50%; background: #52b788; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.6;transform:scale(1.3)} }
+
+  /* HERO */
+  .hero {
+    margin-top: var(--nav-h);
+    position: relative; height: calc(100vh - var(--nav-h)); min-height: 520px;
+    display: flex; align-items: center;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(135deg, rgba(45,106,79,0.82) 0%, rgba(29,68,51,0.55) 50%, rgba(0,0,0,0.3) 100%),
+      url('https://images.unsplash.com/photo-1580137189272-c9379f8864fd?w=1600&q=80') center/cover no-repeat;
+  }
+  .hero-content {
+    position: relative; z-index: 2; padding: 0 60px; max-width: 780px;
+    animation: fadeUp .9s ease both;
+  }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+  .hero-eyebrow {
+    font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--vert-clair); font-weight: 600; margin-bottom: 16px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .hero-eyebrow::before { content:''; display:block; width:28px; height:1.5px; background:var(--vert-clair); }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(38px, 5.5vw, 68px);
+    font-weight: 700; color: white; line-height: 1.12;
+    margin-bottom: 22px;
+  }
+  .hero h1 em { font-style: normal; color: #a8d5b5; }
+  .hero p {
+    font-size: 18px; color: rgba(255,255,255,0.82); line-height: 1.65;
+    max-width: 540px; margin-bottom: 36px; font-weight: 300;
+  }
+  .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--vert-clair); color: white; border: none;
+    padding: 14px 28px; border-radius: 8px; font-size: 15px; font-weight: 600;
+    cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+    transition: background .2s, transform .15s;
+  }
+  .btn-primary:hover { background: #3d9970; transform: translateY(-1px); }
+  .btn-ghost {
+    background: rgba(255,255,255,0.12); color: white; border: 1.5px solid rgba(255,255,255,0.4);
+    padding: 13px 26px; border-radius: 8px; font-size: 15px; font-weight: 500;
+    cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+    backdrop-filter: blur(4px); transition: background .2s;
+  }
+  .btn-ghost:hover { background: rgba(255,255,255,0.2); }
+  .hero-scroll {
+    position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    color: rgba(255,255,255,0.5); font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+    animation: bounce 2.5s infinite;
+  }
+  @keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(6px)} }
+  .hero-scroll svg { width: 18px; height: 18px; stroke: rgba(255,255,255,0.5); fill: none; }
+
+  /* STATS BAR */
+  .stats-bar {
+    background: var(--vert); padding: 0 60px;
+    display: flex; align-items: stretch;
+  }
+  .stat-item {
+    flex: 1; padding: 24px 20px; text-align: center;
+    border-right: 1px solid rgba(255,255,255,0.1);
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; color: var(--vert-clair); font-weight: 700; }
+  .stat-l { font-size: 12px; color: rgba(255,255,255,0.65); margin-top: 3px; letter-spacing: .05em; text-transform: uppercase; }
+
+  /* SECTIONS COMMUNES */
+  section { padding: 80px 60px; }
+  .section-label {
+    font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--vert-clair); font-weight: 600; margin-bottom: 10px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .section-label::before { content:''; display:block; width:20px; height:1.5px; background:var(--vert-clair); }
+  h2 {
+    font-family: 'Playfair Display', serif; font-size: clamp(28px, 3.5vw, 42px);
+    font-weight: 700; color: var(--texte); line-height: 1.2; margin-bottom: 14px;
+  }
+  .section-intro { font-size: 17px; color: var(--texte-sec); line-height: 1.7; max-width: 560px; margin-bottom: 48px; }
+
+  /* ACTIVITÉS CARDS */
+  .activites { background: var(--pierre-pale); }
+  .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+  .card {
+    background: white; border-radius: 12px; overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.06);
+    transition: transform .25s, box-shadow .25s;
+    cursor: pointer; text-decoration: none; color: inherit;
+    display: block;
+  }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(45,106,79,0.14); }
+  .card-img {
+    height: 180px; background-size: cover; background-position: center;
+    position: relative; overflow: hidden;
+  }
+  .card-img::after {
+    content:''; position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 60%);
+  }
+  .card-tag {
+    position: absolute; top: 12px; left: 12px; z-index: 1;
+    background: var(--vert); color: white; font-size: 11px; padding: 3px 10px;
+    border-radius: 4px; font-weight: 600; letter-spacing: .04em;
+  }
+  .card-body { padding: 18px 20px; }
+  .card-body h3 { font-family: 'Playfair Display', serif; font-size: 18px; margin-bottom: 8px; font-weight: 600; }
+  .card-body p { font-size: 13px; color: var(--texte-sec); line-height: 1.6; }
+  .card-body .card-link { font-size: 13px; color: var(--vert); font-weight: 600; margin-top: 12px; display: flex; align-items: center; gap: 4px; }
+
+  /* CHATBOT SECTION */
+  .chatbot-section {
+    background: linear-gradient(135deg, #1a3d2e 0%, var(--vert) 100%);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+  }
+  .chatbot-text .section-label { color: var(--vert-clair); }
+  .chatbot-text h2 { color: white; }
+  .chatbot-text .section-intro { color: rgba(255,255,255,0.72); max-width: 100%; }
+  .chatbot-features { display: flex; flex-direction: column; gap: 16px; margin-top: 32px; }
+  .chatbot-feature { display: flex; gap: 14px; align-items: flex-start; }
+  .feature-icon {
+    width: 36px; height: 36px; border-radius: 8px; background: rgba(82,183,136,0.2);
+    border: 1px solid rgba(82,183,136,0.3);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .feature-icon svg { width: 16px; height: 16px; stroke: var(--vert-clair); fill: none; stroke-width: 2; }
+  .feature-text strong { font-size: 14px; color: white; display: block; margin-bottom: 3px; }
+  .feature-text span { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.5; }
+  .chatbot-mockup {
+    background: white; border-radius: 16px; overflow: hidden;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.3);
+    max-width: 380px; margin: 0 auto;
+  }
+  .mock-header {
+    background: var(--vert); padding: 14px 18px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .mock-avatar {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: var(--vert-clair); display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700; color: white;
+  }
+  .mock-header-text .name { font-size: 13px; font-weight: 600; color: white; }
+  .mock-header-text .status { font-size: 11px; color: rgba(255,255,255,0.65); display: flex; align-items: center; gap: 4px; }
+  .mock-header-text .status::before { content:''; width:6px; height:6px; border-radius:50%; background:#52b788; display:block; }
+  .mock-body { padding: 18px; display: flex; flex-direction: column; gap: 10px; min-height: 260px; background: #f8faf9; }
+  .bubble { max-width: 82%; padding: 10px 14px; border-radius: 12px; font-size: 13px; line-height: 1.5; }
+  .bubble.bot { background: white; border: 1px solid #e5ede8; color: var(--texte); align-self: flex-start; border-radius: 4px 12px 12px 12px; }
+  .bubble.user { background: var(--vert); color: white; align-self: flex-end; border-radius: 12px 4px 12px 12px; }
+  .mock-chips { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 18px 16px; }
+  .chip { font-size: 11px; padding: 5px 11px; border-radius: 20px; border: 1px solid var(--vert); color: var(--vert); background: white; cursor: pointer; }
+  .mock-input { display: flex; align-items: center; padding: 10px 14px; border-top: 1px solid #e5ede8; gap: 10px; background: white; }
+  .mock-input input { flex: 1; border: none; outline: none; font-size: 13px; color: var(--texte-sec); font-family: inherit; background: transparent; }
+  .mock-send { width: 30px; height: 30px; border-radius: 50%; background: var(--vert); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .mock-send svg { width: 14px; height: 14px; fill: white; }
+
+  /* EVENEMENTS */
+  .evenements { background: white; }
+  .events-list { display: flex; flex-direction: column; gap: 0; border: 1px solid rgba(0,0,0,0.07); border-radius: 12px; overflow: hidden; }
+  .event-item { display: flex; gap: 0; border-bottom: 1px solid rgba(0,0,0,0.06); }
+  .event-item:last-child { border-bottom: none; }
+  .event-date { width: 80px; padding: 20px 16px; background: var(--pierre-pale); display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0; border-right: 1px solid rgba(0,0,0,0.06); }
+  .event-date .day { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--vert); line-height: 1; }
+  .event-date .month { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--texte-sec); margin-top: 3px; }
+  .event-info { padding: 18px 22px; flex: 1; }
+  .event-info h3 { font-size: 15px; font-weight: 600; color: var(--texte); margin-bottom: 5px; }
+  .event-info p { font-size: 13px; color: var(--texte-sec); line-height: 1.5; }
+  .event-tag-wrap { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+  .event-tag { font-size: 11px; padding: 2px 9px; border-radius: 4px; background: var(--vert-pale); color: var(--vert); font-weight: 600; }
+
+  /* INFOS PRATIQUES */
+  .infos { background: var(--pierre-pale); }
+  .infos-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); gap: 18px; }
+  .info-card {
+    background: white; border-radius: 10px; padding: 22px;
+    border: 1px solid rgba(0,0,0,0.06);
+  }
+  .info-card svg { width: 24px; height: 24px; stroke: var(--vert); fill: none; stroke-width: 1.8; margin-bottom: 12px; }
+  .info-card h3 { font-size: 14px; font-weight: 600; margin-bottom: 8px; }
+  .info-card p { font-size: 13px; color: var(--texte-sec); line-height: 1.6; }
+
+  /* FOOTER */
+  footer { background: #111; color: rgba(255,255,255,0.6); padding: 48px 60px 32px; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; margin-bottom: 36px; }
+  .footer-brand .top { font-family: 'Playfair Display', serif; font-size: 20px; color: white; margin-bottom: 10px; }
+  .footer-brand p { font-size: 13px; line-height: 1.7; max-width: 280px; }
+  .footer-col h4 { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 14px; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .footer-col ul li { font-size: 13px; }
+  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.07); padding-top: 20px; display: flex; justify-content: space-between; font-size: 12px; align-items: center; }
+  .footer-bottom .made { color: rgba(255,255,255,0.3); }
+  .footer-bot-badge {
+    display: flex; align-items: center; gap: 8px;
+    background: rgba(82,183,136,0.12); border: 1px solid rgba(82,183,136,0.25);
+    padding: 6px 14px; border-radius: 20px; font-size: 12px; color: var(--vert-clair);
+  }
+
+  /* VOICEFLOW WIDGET PLACEHOLDER */
+  .vf-placeholder {
+    position: fixed; bottom: 24px; right: 24px; z-index: 200;
+    width: 56px; height: 56px; border-radius: 50%;
+    background: var(--vert);
+    box-shadow: 0 4px 20px rgba(45,106,79,0.4);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: transform .2s, box-shadow .2s;
+    animation: popIn .5s cubic-bezier(.34,1.56,.64,1) 1s both;
+  }
+  @keyframes popIn { from{transform:scale(0);opacity:0} to{transform:scale(1);opacity:1} }
+  .vf-placeholder:hover { transform: scale(1.08); box-shadow: 0 6px 28px rgba(45,106,79,0.5); }
+  .vf-placeholder svg { width: 26px; height: 26px; fill: white; }
+  .vf-placeholder .notif {
+    position: absolute; top: -2px; right: -2px; width: 16px; height: 16px;
+    background: #ff6b6b; border-radius: 50%; border: 2px solid white;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px; color: white; font-weight: 700;
+  }
+
+  @media(max-width:900px){
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    section { padding: 60px 24px; }
+    .hero-content { padding: 0 24px; }
+    .stats-bar { padding: 0 20px; flex-wrap: wrap; }
+    .chatbot-section { grid-template-columns: 1fr; gap: 40px; }
+    .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-icon">
+      <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/></svg>
+    </div>
+    <div class="nav-logo-text">
+      <div class="top">Pays de Nay</div>
+      <div class="sub">Office de Tourisme</div>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#activites">Activités</a></li>
+    <li><a href="#evenements">Événements</a></li>
+    <li><a href="#infos">Infos pratiques</a></li>
+    <li><a href="#chatbot" class="nav-cta"><div class="bot-dot"></div>Assistant IA</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Béarn · Pyrénées-Atlantiques</div>
+    <h1>Le bonheur est<br><em>grandeur nature</em></h1>
+    <p>Bastide médiévale au bord du Gave de Pau, piémont pyrénéen, gastronomie béarnaise… Bienvenue en Pays de Nay.</p>
+    <div class="hero-actions">
+      <a href="#activites" class="btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 8 16 12 12 16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        Découvrir le territoire
+      </a>
+      <a href="#chatbot" class="btn-ghost">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        Parler à Nay'Bot
+      </a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <svg viewBox="0 0 24 24" stroke-width="1.5"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
+    Défiler
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat-item"><div class="stat-n">240</div><div class="stat-l">km de sentiers</div></div>
+  <div class="stat-item"><div class="stat-n">29</div><div class="stat-l">communes</div></div>
+  <div class="stat-item"><div class="stat-n">25</div><div class="stat-l">km voie verte</div></div>
+  <div class="stat-item"><div class="stat-n">24/7</div><div class="stat-l">Assistant IA</div></div>
+</div>
+
+<!-- ACTIVITÉS -->
+<section class="activites" id="activites">
+  <div class="section-label">À faire & à voir</div>
+  <h2>Explorez le Pays de Nay</h2>
+  <p class="section-intro">Entre piémont pyrénéen, bastide médiévale et nature sauvage, le territoire offre une palette d'activités pour tous les profils.</p>
+  <div class="cards-grid">
+    <a href="#" class="card">
+      <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=75')">
+        <span class="card-tag">Randonnée</span>
+      </div>
+      <div class="card-body">
+        <h3>Sentiers & balades</h3>
+        <p>240 km de sentiers balisés, du bord du Gave aux hauteurs pyrénéennes. Niveaux débutant à expert.</p>
+        <div class="card-link">Voir les itinéraires →</div>
+      </div>
+    </a>
+    <a href="#" class="card">
+      <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1534787238916-9ba6764efd4f?w=600&q=75')">
+        <span class="card-tag">Vélo</span>
+      </div>
+      <div class="card-body">
+        <h3>Voie verte & Vélosud</h3>
+        <p>25 km de voie verte le long du Gave de Pau, et la Véloroute V81 pour les cyclotouristes confirmés.</p>
+        <div class="card-link">Voir les circuits →</div>
+      </div>
+    </a>
+    <a href="#" class="card">
+      <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1533577116850-9cc66cad8a9b?w=600&q=75')">
+        <span class="card-tag">Patrimoine</span>
+      </div>
+      <div class="card-body">
+        <h3>Maison Carrée & bastide</h3>
+        <p>Joyau Renaissance classé Monument Historique, au cœur de la bastide médiévale fondée en 1302.</p>
+        <div class="card-link">En savoir plus →</div>
+      </div>
+    </a>
+    <a href="#" class="card">
+      <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&q=75')">
+        <span class="card-tag">Loisirs</span>
+      </div>
+      <div class="card-body">
+        <h3>Lac de Baudreix</h3>
+        <p>Baignade, canoë-kayak et détente sur les berges du Gave. La saligue, milieu naturel préservé.</p>
+        <div class="card-link">Préparer ma visite →</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- CHATBOT SECTION -->
+<section class="chatbot-section" id="chatbot">
+  <div class="chatbot-text">
+    <div class="section-label">Nouveau · Assistant virtuel</div>
+    <h2>Nay'Bot, votre guide 24h/24</h2>
+    <p class="section-intro">Posez toutes vos questions sur le territoire, en français, anglais ou espagnol. Nay'Bot connaît le Pays de Nay sur le bout des doigts.</p>
+    <div class="chatbot-features">
+      <div class="chatbot-feature">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div class="feature-text">
+          <strong>Disponible 24h/24, 7j/7</strong>
+          <span>Même le dimanche soir avant votre arrivée</span>
+        </div>
+      </div>
+      <div class="chatbot-feature">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24"><path d="M5 7l5 5-5 5M12 17h7"/></svg>
+        </div>
+        <div class="feature-text">
+          <strong>3 langues</strong>
+          <span>Français, anglais, espagnol — détection automatique</span>
+        </div>
+      </div>
+      <div class="chatbot-feature">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg>
+        </div>
+        <div class="feature-text">
+          <strong>Transfert vers l'équipe</strong>
+          <span>Si votre question nécessite un conseiller humain</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="chatbot-mockup">
+    <div class="mock-header">
+      <div class="mock-avatar">N</div>
+      <div class="mock-header-text">
+        <div class="name">Nay'Bot</div>
+        <div class="status">En ligne maintenant</div>
+      </div>
+    </div>
+    <div class="mock-body">
+      <div class="bubble bot">Bonjour et bienvenue en Pays de Nay ! Je suis votre guide virtuel béarnais. Activités, hébergements, marchés… posez-moi tout !</div>
+      <div class="bubble user">Que faire avec mes enfants ce week-end ?</div>
+      <div class="bubble bot">Super choix ! Je vous conseille le lac de Baudreix pour la baignade 🏊, le marché du samedi matin sous les halles, et le zoo d'Asson à 15 min. Vous souhaitez plus de détails sur l'un de ces endroits ?</div>
+    </div>
+    <div class="mock-chips">
+      <span class="chip">Randonnées</span>
+      <span class="chip">Hébergement</span>
+      <span class="chip">Restaurants</span>
+    </div>
+    <div class="mock-input">
+      <input type="text" placeholder="Posez votre question…" readonly>
+      <button class="mock-send"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z"/></svg></button>
+    </div>
+  </div>
+</section>
+
+<!-- ÉVÉNEMENTS -->
+<section class="evenements" id="evenements">
+  <div class="section-label">Agenda</div>
+  <h2>À vos agendas !</h2>
+  <p class="section-intro">Manifestations culturelles, marchés, festivités béarnaises… Le Pays de Nay s'anime toute l'année.</p>
+  <div class="events-list">
+    <div class="event-item">
+      <div class="event-date"><div class="day">26</div><div class="month">Mar</div></div>
+      <div class="event-info">
+        <h3>Exposition "Les Géométries Souterraines"</h3>
+        <p>Alain-Jacques Lévrier-Mussat — Minoterie de Nay. Jusqu'au 10 mai.</p>
+        <div class="event-tag-wrap"><span class="event-tag">Exposition</span></div>
+      </div>
+    </div>
+    <div class="event-item">
+      <div class="event-date"><div class="day">01</div><div class="month">Avr</div></div>
+      <div class="event-info">
+        <h3>Lo Mes Biarnés en Vath Vielha</h3>
+        <p>Tout le mois d'avril — animations culturelles, dégustations, concerts et marchés en Béarn.</p>
+        <div class="event-tag-wrap"><span class="event-tag">Festival</span><span class="event-tag">Gastronomie</span></div>
+      </div>
+    </div>
+    <div class="event-item">
+      <div class="event-date"><div class="day">Ven</div><div class="month">Hebdo</div></div>
+      <div class="event-info">
+        <h3>Marché de Bordes</h3>
+        <p>Chaque vendredi matin aux halles de Bordes — producteurs locaux, fromages, légumes, spécialités béarnaises.</p>
+        <div class="event-tag-wrap"><span class="event-tag">Marché</span></div>
+      </div>
+    </div>
+    <div class="event-item">
+      <div class="event-date"><div class="day">Sam</div><div class="month">Hebdo</div></div>
+      <div class="event-info">
+        <h3>Grand marché de Nay</h3>
+        <p>Chaque samedi matin, Place de la République sous les halles de la bastide. Incontournable !</p>
+        <div class="event-tag-wrap"><span class="event-tag">Marché</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INFOS PRATIQUES -->
+<section class="infos" id="infos">
+  <div class="section-label">Informations</div>
+  <h2>Préparez votre visite</h2>
+  <p class="section-intro">Tout ce qu'il faut savoir avant d'arriver en Pays de Nay.</p>
+  <div class="infos-grid">
+    <div class="info-card">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <h3>Horaires d'accueil</h3>
+      <p>Lun–Ven&nbsp;: 9h30–12h30 / 14h–18h<br>Samedi&nbsp;: 9h30–12h30 / 14h–17h<br>Fermé le dimanche</p>
+    </div>
+    <div class="info-card">
+      <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/></svg>
+      <h3>Nous trouver</h3>
+      <p>Place du 8-Mai-1945<br>64800 Nay<br>Parking gratuit sur place</p>
+    </div>
+    <div class="info-card">
+      <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.84a16 16 0 0 0 6 6l1-1.94a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.7 15z"/></svg>
+      <h3>Nous contacter</h3>
+      <p>05 59 13 94 99<br>Ou via notre assistant Nay'Bot disponible en bas à droite ↘</p>
+    </div>
+    <div class="info-card">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <h3>Accès & transport</h3>
+      <p>20 min de Pau en voiture (D938)<br>30 min de Lourdes<br>Bus depuis Pau disponible</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="top">Office de Tourisme du Pays de Nay</div>
+      <p>Concentré de Pyrénées 100% Béarn, marqué par le passage du Gave, les coteaux boisés et le piémont de la Vallée de l'Ouzom.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Découvrir</h4>
+      <ul>
+        <li>Randonnées pédestres</li>
+        <li>Randonnées à vélo</li>
+        <li>Patrimoine culturel</li>
+        <li>Gastronomie & terroir</li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Pratique</h4>
+      <ul>
+        <li>Où dormir ?</li>
+        <li>Où manger ?</li>
+        <li>Comment venir ?</li>
+        <li>Nous contacter</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="made">© 2025 Office de Tourisme Communautaire du Pays de Nay</span>
+    <div class="footer-bot-badge">
+      <div class="bot-dot"></div>
+      Propulsé par Nay'Bot · Assistant IA
+    </div>
+  </div>
+</footer>
+
+<!-- BOUTON CHATBOT (remplacé par le widget Voiceflow) -->
+<div class="vf-placeholder" id="vf-btn" title="Ouvrir Nay'Bot">
+  <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+  <div class="notif">1</div>
+</div>
+
+<!-- ============================================================
+  VOICEFLOW WIDGET — COLLE TON SNIPPET ICI
+  Remplace ce bloc commentaire par le code fourni par Voiceflow
+  (Menu Publish > Integrations > Web Chat > Copy Snippet)
+  ============================================================ -->
+<!--
+<script type="text/javascript">
+  (function(d, t) {
+    var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
+    v.onload = function() {
+      window.voiceflow.chat.load({
+        verify: { projectID: 'COLLE_TON_PROJECT_ID_ICI' },
+        url: 'https://general-runtime.voiceflow.com',
+        versionID: 'production'
+      });
+    }
+    v.src = "https://cdn.voiceflow.com/widget/bundle.mjs";
+    v.type = "text/javascript";
+    s.parentNode.insertBefore(v, s);
+  })(document, 'script');
+</script>
+-->
+
+<script>
+  // Scroll nav shadow
+  window.addEventListener('scroll', () => {
+    document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // Bouton placeholder (supprimé quand Voiceflow est actif)
+  document.getElementById('vf-btn').addEventListener('click', () => {
+    if (window.voiceflow?.chat) {
+      window.voiceflow.chat.open();
+    } else {
+      alert('Voiceflow non configuré — colle ton snippet dans le HTML pour activer le bot !');
+    }
+  });
+</script>
+</body>
+</html>
